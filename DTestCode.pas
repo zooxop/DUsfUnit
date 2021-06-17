@@ -5,7 +5,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Xml.XMLDoc, Xml.XMLIntf;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Xml.XMLDoc, Xml.XMLIntf, PrintUtils;
 
   function sortStringList(pSDelimiterText :String) :TStringList;
 
