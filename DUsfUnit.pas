@@ -10,10 +10,11 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Printers, PrintUtils;
 
-var
-  str :String;
+type
+  TDynArrChar = array of Char;  //동적 배열을 매개변수로 전달 시 사용
 
-  procedure setStr(pStr :String);
+  ///<summary>알파벳 타입 시퀀스 가져오기 eg.)A,B ... AA,AB,AC..</summary>
+  function getNextSeqAlpha(pCharArr :TDynArrChar) :TDynArrChar;
 
   ///<summary>프린터 용지 설정 가져오기</summary>
   function getPaperSize() :Integer;
@@ -31,9 +32,37 @@ var
 
 implementation
 
-procedure setStr(pStr :String);
+function getNextSeqAlpha(pCharArr :TDynArrChar) :TDynArrChar;
+var
+  i :Integer;
+  isIncLength :Boolean;
 begin
-  str := pStr;
+  isIncLength := False;
+  for i := Length(pCharArr)-2 downto 0 do
+  begin
+    if UpperCase(pCharArr[i]) = 'Z' then
+    begin
+      pCharArr[i] := 'A';
+      isIncLength := True;
+      Continue;
+    end;
+
+    isIncLength := False;
+
+    pCharArr[i] := Char(Integer(pCharArr[i])+1);
+    break;
+  end;
+
+  if isIncLength then      //자리수 증가해야 하는 경우
+  begin
+    i := Length(pCharArr);
+    SetLength(pCharArr, i+1);
+
+    pCharArr[i-1] := 'A';
+  end;
+
+  result := pCharArr;
+
 end;
 
 function getPaperSize() :Integer;
