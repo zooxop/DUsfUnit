@@ -13,6 +13,13 @@ uses
 type
   TDynArrChar = array of Char;  //동적 배열을 매개변수로 전달 시 사용
 
+  TIndexList = class(TStringList)
+    public
+      //function indexOf(
+      ///<summary> TStringList Type으로 indexex 리턴 </summary>
+      function indexOfList(sKey :String) :TStringList; overload;
+  end;
+
   ///<summary>알파벳 타입 시퀀스 가져오기 eg.)A,B ... AA,AB,AC..</summary>
   function getNextSeqAlpha(pCharArr :TDynArrChar) :TDynArrChar;
 
@@ -107,6 +114,20 @@ begin
   slStrList.Add(IntToStr(ADevMode.dmTTOption));
   slStrList.Add(ADevMode.dmDeviceName);
   result := slStrList;
+end;
+
+{ TIndexList }
+
+function TIndexList.indexOfList(sKey: String): TStringList;
+var
+  i :Integer;
+begin
+  Result := TStringList.Create;
+  for i := 0 to GetCount - 1 do
+  begin
+    if CompareStrings(Get(i), sKey) = 0 then
+      Result.Add(IntToStr(i));
+  end;
 end;
 
 end.
