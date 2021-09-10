@@ -37,7 +37,37 @@ type
   procedure setPaperSize(pSize :Integer);
   function getPrinterInfo() :TStringList;
 
+  function RightStr(const Str: String; Size: Word): String;
+  function LeftStr(const Str: String; Size: Word): String;
+  function MidStr(Const Str: String; Size: Word): String;
+
+
 implementation
+
+function RightStr(const Str: String; Size: Word): String;
+var
+  len: Byte;
+begin
+  len := Length(Str);
+  if Size > len then
+    Size := len;
+  RightStr := Copy(Str,len-Size+1,Size)
+end;
+
+function LeftStr(const Str: String; Size: Word): String;
+begin
+  LeftStr := Copy(Str,1,Size)
+end;
+
+function MidStr(Const Str: String; Size: Word): String;
+var
+  len: Byte;
+begin
+  len := Length(Str);
+  if Size > len then
+    Size := len;
+  MidStr := Copy(Str,((len - Size) div 2)+1,Size)
+end;
 
 function getNextSeqAlpha(pCharArr :TDynArrChar) :TDynArrChar;
 var
